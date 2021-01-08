@@ -84,6 +84,7 @@ export class DescriptionHelpers {
             return (
                 <div>
                     <Image
+                        priority
                         width={32}
                         height={32}
                         src={`https://www.countryflags.io/${dataItemDesc.code}/flat/32.png`}
