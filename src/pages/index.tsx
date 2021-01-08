@@ -1,4 +1,5 @@
-import type { InferGetStaticPropsType } from 'next';
+import {DateTime} from 'luxon';
+import type { InferGetStaticPropsType, PageConfig } from 'next';
 import Head from 'next/head';
 import Navbar from 'react-bootstrap/Navbar';
 import { data } from '../data/data';
@@ -23,7 +24,7 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
             
             <Navbar fixed='bottom'>
                 <Navbar.Text>
-                    Build: {props.buildId}
+                    Build: {props.buildDate}
                 </Navbar.Text>
             </Navbar>
         </>
@@ -31,11 +32,14 @@ export default function Home(props: InferGetStaticPropsType<typeof getStaticProp
 }
 
 export const getStaticProps = async () => {
-    const getBuildId = require('../../config/getBuildId.js');
     return {
         props: {
             data,
-            buildId: await getBuildId() as string
+            buildDate: DateTime.utc().toFormat('dd/LL/yyyy TTT')
         }
     };
 };
+
+export const config: PageConfig = {
+    unstable_runtimeJS: false
+}
